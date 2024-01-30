@@ -10,9 +10,12 @@ const port = 5000
 
 app.use(cors({
   origin:["https://frontend-deploy-nu.vercel.app"],
-  methods:["POST","GET"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials:true
 }))
+
+// Enable CORS middleware
+app.use(cors(corsOptions));
 
 
 app.get('/', (req, res) => {
