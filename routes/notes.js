@@ -8,7 +8,16 @@ const { body, validationResult } = require("express-validator");
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   try {
     const notes = await Note.find({ user: req.user.id });
-    res.json(notes);
+    // Send notes data along with color information to the client
+    const notesWithColor = notes.map((note) => ({
+      _id: note._id,
+      title: note.title,
+      description: note.description,
+      tag: note.tag,
+      color: note.color,
+    }));
+
+    res.json(notesWithColor);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error!!");
@@ -27,7 +36,7 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const { title, description, tag } = req.body;
+      const { title, description, tag, color} = req.body;
 
       // if there is any error occurs
       const errors = validationResult(req);
@@ -39,6 +48,7 @@ router.post(
         title,
         description,
         tag,
+        color,
         user: req.user.id,
       });
       const savedNote = await note.save();
@@ -55,7 +65,7 @@ router.post(
 
 router.put("/updatenote/:id", fetchuser, async (req, res) => {
 
-  const {title, description, tag} = req.body;
+  const {title, description, tag,color} = req.body;
 
   // creating a newNOte object 
   const newNote ={};
@@ -74,6 +84,14 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   }
 
   note = await Note.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true});
+
+  // Update the note with new color data
+  note.title = title;
+  note.description = description;
+  note.tag = tag;
+  note.color = color; // Update color
+  await note.save();
+
   res.json({note});
 
 })

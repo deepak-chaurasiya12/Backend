@@ -24,6 +24,11 @@ const NotesSchema = new Schema({
         default:'General'
     },
 
+    color: {
+        type: String,
+        default: '#ffffff', // Default color is white
+      },
+
     timestamp:{
         type:Date,
         default:Date.now
