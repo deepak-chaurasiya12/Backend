@@ -14,8 +14,7 @@ app.use(cors({
   credentials:true
 }))
 
-// Enable CORS middleware
-app.use(cors(corsOptions));
+
 
 
 app.get('/', (req, res) => {
