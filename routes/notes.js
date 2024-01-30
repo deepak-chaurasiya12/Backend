@@ -83,7 +83,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
 
   }
 
-  note = await Note.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true});
+  // note = await Note.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true});
 
   // Update the note with new color data
   note.title = title;
