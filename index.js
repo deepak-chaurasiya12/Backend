@@ -8,13 +8,11 @@ const port = 5000
 
 
 
-const corsOptions = {
-  origin: ["https://frontend-deploy-nu.vercel.app"],
+app.use(cors({
+  origin:["https://frontend-deploy-nu.vercel.app"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
+  credentials:true
+}))
 
 
 
